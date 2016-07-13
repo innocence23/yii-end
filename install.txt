@@ -1,0 +1,75 @@
+clone代码
+
+composer update
+
+chmod 777 log/*  日志文件权限
+
+执行sql  或者执行下面的语句
+yii2-user : $ php yii migrate/up --migrationPath=@vendor/dektrium/yii2-user/migrations
+（http://yii2-user.dektrium.com/）
+yii2-admin：$ php yii migrate --migrationPath=@yii/rbac/migrations
+（https://github.com/mdmsoft/yii2-admin）
+
+
+
+
+
+
+https://github.com/dmstr/yii2-adminlte-asset
+
+
+nginx配置及日志文件
+####################################################################################################################
+server {
+        listen 80;
+        root /home/mint/project/github/yii-end/backend/web;
+        index index.php index.html index.htm;
+        server_name back-yii-end.com;
+
+        access_log  /home/mint/project/github/yii-end/log/access.log;
+        error_log  /home/mint/project/github/yii-end/log/error.log;
+        location / {
+                try_files $uri $uri/ /index.php$is_args$args;
+        }
+
+        # pass the PHP scripts to FastCGI server listening on 127.0.0.1:9000
+        location ~ \.php$ {
+                include snippets/fastcgi-php.conf;
+                # With php7.0-cgi alone:
+                # fastcgi_pass 127.0.0.1:9000;
+                # With php7.0-fpm:
+                fastcgi_pass unix:/run/php/php7.0-fpm.sock;
+        }
+
+        #location ~ /\.ht {
+        #       deny all;
+        #}
+}
+
+server {
+        listen 80;
+        root /home/mint/project/github/yii-end/frontend/web;
+        index index.php index.html index.htm;
+        server_name front-yii-end.com;
+
+        access_log  /home/mint/project/github/yii-end/log/access.log;
+        error_log  /home/mint/project/github/yii-end/log/error.log;
+        location / {
+                try_files $uri $uri/ /index.php$is_args$args;
+        }
+
+        # pass the PHP scripts to FastCGI server listening on 127.0.0.1:9000
+        location ~ \.php$ {
+                include snippets/fastcgi-php.conf;
+                # With php7.0-cgi alone:
+                # fastcgi_pass 127.0.0.1:9000;
+                # With php7.0-fpm:
+                fastcgi_pass unix:/run/php/php7.0-fpm.sock;
+        }
+
+        #location ~ /\.ht {
+        #       deny all;
+        #}
+}
+
+####################################################################################################################
